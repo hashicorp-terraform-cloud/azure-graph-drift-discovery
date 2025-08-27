@@ -3,19 +3,27 @@ terraform {
     msgraph = {
       source = "microsoft/msgraph"
     }
+    azuread = {
+      source = "hashicorp/azuread"
+    }
   }
 }
 
 provider "msgraph" {
 }
 
+provider "azuread" {
+}
+
+
+// tests with the msgraph provider
 
 resource "msgraph_resource" "group" {
   url = "groups"
   body = {
-    displayName     = "Drift Demo Group"
+    displayName     = "${var.group_base_name} - MSGraph"
     mailEnabled     = false
-    mailNickname    = "driftdemo"
+    mailNickname    = "msgraph"
     securityEnabled = true
   }
 }
@@ -28,6 +36,16 @@ data "msgraph_resource" "group" {
   }
 }
 
-output "all" {
+output "msgraph_all" {
   value = data.msgraph_resource.group.output.all
+}
+
+
+// tests with the azuread provider
+
+resource "azuread_group" "group" {
+  display_name     = "${var.group_base_name} - AzureAD"
+  mail_enabled     = false
+  mail_nickname    = "azuread"
+  security_enabled = true
 }
