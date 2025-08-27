@@ -3,10 +3,9 @@ output "entra_group" {
 }
 
 output "entra_user" {
-  sensitive = true
-  value     = nonsensitive(azuread_user.user)
+  value = azuread_user.user.display_name
 }
 
 output "b2b_invitation" {
-  value = msgraph_resource.b2b_user.output.all
+  value = azuread_invitation.b2b
 }
