@@ -3,7 +3,7 @@ output "entra_group" {
 }
 
 output "entra_user" {
-  sensitive = false
+  sensitive = true
   value     = nonsensitive(azuread_user.user)
 }
 
