@@ -6,6 +6,9 @@ terraform {
     azuread = {
       source = "hashicorp/azuread"
     }
+    random = {
+      source = "hashicorp/random"
+    }
   }
 }
 
@@ -13,4 +16,7 @@ provider "msgraph" {
 }
 
 provider "azuread" {
+}
+
+provider "random" {
 }

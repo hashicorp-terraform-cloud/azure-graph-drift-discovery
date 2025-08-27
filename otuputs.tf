@@ -1,7 +1,11 @@
-output "msgraph_group_display_name" {
-  value = data.msgraph_resource.group.output.display_name
+output "entra_group" {
+  value = azuread_group.group
 }
 
-output "azuread_group_display_name" {
-  value = azuread_group.group.display_name
+output "entra_user" {
+  value = azuread_user.user
+}
+
+output "b2b_invitation" {
+  value = msgraph_resource.b2b_user.output.all
 }

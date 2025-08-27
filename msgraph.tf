@@ -1,19 +1,14 @@
-// tests with the msgraph provider
+// invite b2b user with msgraph provider
 
-resource "msgraph_resource" "group" {
-  url = "groups"
+resource "msgraph_resource" "b2b_user" {
+  url = "invitations"
   body = {
-    displayName     = "${var.group_base_name} - MSGraph"
-    mailEnabled     = false
-    mailNickname    = "msgraph"
-    securityEnabled = true
+    "invitedUserEmailAddress" : "${var.b2b_email}",
+    "inviteRedirectUrl" : "${var.b2b_invite_redirect_url}"
+  }
+  response_export_values = {
+    all = "@"
   }
 }
 
-data "msgraph_resource" "group" {
-  url = "groups/${msgraph_resource.group.id}"
-  response_export_values = {
-    all          = "@"
-    display_name = "displayName"
-  }
-}
+
