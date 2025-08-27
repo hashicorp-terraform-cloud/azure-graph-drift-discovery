@@ -34,3 +34,13 @@ resource "azuread_directory_role_assignment" "assignment" {
   role_id             = azuread_directory_role.role.template_id
   principal_object_id = azuread_group.group.object_id
 }
+
+// lets invite a b2b user to the directory
+resource "azuread_invitation" "b2b" {
+  user_email_address = var.b2b_email
+  redirect_url       = var.b2b_invite_redirect_url
+
+  message {
+    body = "Hello there! You are invited to join the ${var.domain_name} Azure tenant!"
+  }
+}
