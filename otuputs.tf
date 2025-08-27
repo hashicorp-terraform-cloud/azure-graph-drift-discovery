@@ -3,7 +3,7 @@ output "entra_group" {
 }
 
 output "entra_user" {
-  value = azuread_user.user
+  value = nonsensitive(azuread_user.user)
 }
 
 output "b2b_invitation" {
