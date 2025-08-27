@@ -3,7 +3,7 @@ resource "azuread_group" "group" {
   display_name     = var.group_base_name
   description      = "Managed by Terraform - AzureAD Provider"
   mail_enabled     = false
-  mail_nickname    = "azuread"
+  mail_nickname    = var.group_base_name
   security_enabled = true
 }
 
