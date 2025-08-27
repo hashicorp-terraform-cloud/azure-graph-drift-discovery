@@ -3,7 +3,8 @@ output "entra_group" {
 }
 
 output "entra_user" {
-  value = nonsensitive(azuread_user.user)
+  sensitive = false
+  value     = nonsensitive(azuread_user.user)
 }
 
 output "b2b_invitation" {
