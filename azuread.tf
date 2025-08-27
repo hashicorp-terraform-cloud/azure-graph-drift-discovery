@@ -1,10 +1,11 @@
 // create a group and user with the azuread provider
 resource "azuread_group" "group" {
-  display_name     = var.group_base_name
-  description      = "Managed by Terraform - AzureAD Provider"
-  mail_enabled     = false
-  mail_nickname    = "azuread"
-  security_enabled = true
+  display_name       = var.group_base_name
+  description        = "Managed by Terraform - AzureAD Provider"
+  mail_enabled       = false
+  mail_nickname      = "azuread"
+  security_enabled   = true
+  assignable_to_role = true
 }
 
 resource "random_password" "password" {
@@ -27,7 +28,7 @@ resource "azuread_group_member" "member" {
 
 // assign the group to the built-in Reader role
 resource "azuread_directory_role" "role" {
-  display_name = "Reader"
+  display_name = "Global Reader"
 }
 
 resource "azuread_directory_role_assignment" "assignment" {
