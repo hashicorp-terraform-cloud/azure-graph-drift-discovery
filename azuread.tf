@@ -7,8 +7,12 @@ resource "azuread_group" "group" {
 }
 
 resource "random_password" "password" {
-  length  = 16
-  special = false
+  length           = 32
+  lower            = true
+  upper            = true
+  special          = true
+  numeric          = true
+  override_special = "-._~"
 }
 
 resource "azuread_user" "user" {
