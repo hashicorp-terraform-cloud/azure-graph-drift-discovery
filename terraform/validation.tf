@@ -1,5 +1,5 @@
 check "check_managed_users" {
-  data "azuread_users" "all_users" {}
+  data "azuread_users" "all_users" { return_all = true }
 
   assert {
     condition     = length(data.azuread_users.all_users) == length(azuread_user.user)
