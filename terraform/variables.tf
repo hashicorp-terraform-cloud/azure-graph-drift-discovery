@@ -5,10 +5,9 @@ variable "group_base_name" {
   default     = "Entra Drift Demo"
 }
 
-variable "username" {
-  type        = string
-  description = "Username for the Entra user"
-  default     = "demo.user"
+variable "users" {
+  description = "Set of usernames to create"
+  type        = set(string)
 }
 
 variable "domain_name" {
