@@ -9,18 +9,28 @@ check "verify_group_membership" {
   }
 
   assert {
-    condition = alltrue([
+    condition = length([
       for user_key, user in azuread_user.user :
-      contains(data.azuread_group.managed_group.members, user.object_id)
-    ])
-    error_message = "Not all Terraform-managed users are present in the group membership list"
+      user.user_principal_name
+      if !contains(data.azuread_group.managed_group.members, user.object_id)
+    ]) == 0
+    error_message = "The following Terraform-managed users are missing from the group: ${join(", ", [
+      for user_key, user in azuread_user.user :
+      user.user_principal_name
+      if !contains(data.azuread_group.managed_group.members, user.object_id)
+    ])}"
   }
 
   assert {
-    condition = alltrue([
+    condition = length([
       for member_id in data.azuread_group.managed_group.members :
-      contains(values(azuread_user.user)[*].object_id, member_id)
-    ])
-    error_message = "The group contains users that are not managed by Terraform"
+      member_id
+      if !contains(values(azuread_user.user)[*].object_id, member_id)
+    ]) == 0
+    error_message = "The following users are in the group but not managed by Terraform (IDs): ${join(", ", [
+      for member_id in data.azuread_group.managed_group.members :
+      member_id
+      if !contains(values(azuread_user.user)[*].object_id, member_id)
+    ])}"
   }
 }
