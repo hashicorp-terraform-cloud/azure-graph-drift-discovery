@@ -15,4 +15,12 @@ check "verify_group_membership" {
     ])
     error_message = "Not all Terraform-managed users are present in the group membership list"
   }
+
+  assert {
+    condition = alltrue([
+      for member_id in data.azuread_group.managed_group.members :
+      contains(values(azuread_user.user)[*].object_id, member_id)
+    ])
+    error_message = "The group contains users that are not managed by Terraform"
+  }
 }
