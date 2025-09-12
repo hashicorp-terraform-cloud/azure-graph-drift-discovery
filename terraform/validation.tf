@@ -2,8 +2,8 @@ check "check_managed_users" {
   data "azuread_users" "all_users" { return_all = true }
 
   assert {
-    condition     = length(data.azuread_users.all_users) == length(azuread_user.user)
-    error_message = "${length(data.azuread_users.all_users)} users exist, but ${length(azuread_user.user)} users are managed by Terraform"
+    condition     = length(data.azuread_users.all_users.user_principal_names) == length(azuread_user.user)
+    error_message = "${length(data.azuread_users.all_users.user_principal_names)} users exist, but ${length(azuread_user.user)} users are managed by Terraform"
   }
 }
 
